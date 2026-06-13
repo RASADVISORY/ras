@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAS — Risk, Assessment, and Solutions</title>
+  <meta name="description" content="RAS is an independent technical survey and risk advisory firm specialising in industrial site survey, risk analysis and consulting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:      #151515;
+      --champagne:  #D6C2A1;
+      --warm-white: #F7F3EE;
+      --ash:        #B7B1AA;
+      --mid:        #7A746E;
+      --line:       rgba(183,177,170,0.25);
+      --serif-stack: 'Sora', sans-serif;
+      --body-stack:  'Manrope', sans-serif;
+      --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      background: var(--warm-white);
+      color: var(--black);
+      font-family: var(--body-stack);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CUSTOM CURSOR ─────────────────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--black);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s, width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--black);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s var(--ease-out), width 0.4s var(--ease-out), height 0.4s var(--ease-out), opacity 0.3s;
+      opacity: 0.5;
+    }
+
+    body:hover .cursor { opacity: 1; }
+
+    /* ─── NOISE TEXTURE OVERLAY ─────────────────────────────────────────────── */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9990;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 2rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      mix-blend-mode: normal;
+      transition: padding 0.5s var(--ease-out), background 0.5s;
+    }
+
+    nav.scrolled {
+      padding: 1.2rem 3.5rem;
+      background: rgba(247,243,238,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-logo {
+      font-family: var(--serif-stack);
+      font-weight: 300;
+      font-size: 1.1rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--body-stack);
+      font-weight: 400;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.25s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 0; height: 1px;
+      background: var(--black);
+      transition: width 0.35s var(--ease-out);
+    }
+
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      font-family: var(--body-stack);
+      font-weight: 400;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border: 1px solid var(--black);
+      padding: 0.65rem 1.6rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .nav-cta:hover { background: var(--black); color: var(--warm-white); }
+
+    /* ─── HAMBURGER ─────────────────────────────────────────────────────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: none;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 1px;
+      background: var(--black);
+      transition: transform 0.4s var(--ease-out), opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--warm-white);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 4rem 3rem;
+      transform: translateX(100%);
+      transition: transform 0.6s var(--ease-out);
+    }
+
+    .mobile-menu.open { transform: translateX(0); }
+
+    .mobile-menu a {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      opacity: 0.4;
+      transition: opacity 0.25s;
+    }
+
+    .mobile-menu a:hover { opacity: 1; }
+
+    /* ─── SECTION UTILITY ───────────────────────────────────────────────────── */
+    section { position: relative; }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 3.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 1.75rem; }
+    }
+
+    /* ─── SECTION LABEL ─────────────────────────────────────────────────────── */
+    .section-label {
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--champagne);
+    }
+
+    /* ─── HERO ──────────────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100svh;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 6rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(18vw, 22vw, 28vw);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(183,177,170,0.06);
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 1s var(--ease-out) 0.3s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--champagne);
+    }
+
+    .hero-heading {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(3.2rem, 7vw, 8rem);
+      color: var(--warm-white);
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      max-width: 900px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 1.1s var(--ease-out) 0.5s forwards;
+    }
+
+    .hero-heading em {
+      font-style: normal;
+      color: var(--champagne);
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 5rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 1s var(--ease-out) 0.8s forwards;
+    }
+
+    .hero-desc {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--ash);
+      max-width: 360px;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .btn-primary {
+      font-family: var(--body-stack);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--champagne);
+      text-decoration: none;
+      padding: 1.1rem 2.6rem;
+      display: inline-block;
+      transition: background 0.3s, color 0.3s, transform 0.3s var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      background: var(--warm-white);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      font-family: var(--body-stack);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: color 0.3s;
+    }
+
+    .btn-ghost:hover { color: var(--warm-white); }
+
+    .btn-ghost svg { transition: transform 0.3s var(--ease-out); }
+    .btn-ghost:hover svg { transform: translateX(4px); }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      right: 3.5rem;
+      bottom: 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out) 1.2s forwards;
+    }
+
+    .hero-scroll-indicator span {
+      font-family: var(--body-stack);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--mid), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    /* ─── ABOUT ─────────────────────────────────────────────────────────────── */
+    #about {
+      padding: 10rem 0;
+      background: var(--warm-white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .about-left { padding-top: 4rem; }
+
+    .about-statement {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(1.9rem, 3vw, 2.9rem);
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--black);
+      margin-bottom: 3.5rem;
+    }
+
+    .about-statement strong {
+      font-weight: 400;
+      color: var(--black);
+    }
+
+    .about-body {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.96rem;
+      line-height: 1.9;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-right {
+      border-left: 1px solid var(--line);
+      padding-left: 4rem;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .stat-item {}
+
+    .stat-num {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: 3.5rem;
+      letter-spacing: -0.04em;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-family: var(--body-stack);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    .about-credentials {
+      border-top: 1px solid var(--line);
+      padding-top: 2.5rem;
+    }
+
+    .credential-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--body-stack);
+      font-size: 0.78rem;
+      color: var(--mid);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+    }
+
+    .credential-item span:first-child { color: var(--black); font-weight: 500; }
+
+    /* ─── SERVICES ──────────────────────────────────────────────────────────── */
+    #services {
+      padding: 10rem 0;
+      background: var(--black);
+    }
+
+    #services .section-label { color: rgba(183,177,170,0.5); }
+    #services .section-label::before { background: rgba(214,194,161,0.35); }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 6rem;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .services-heading {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      color: var(--warm-white);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .services-sub {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: var(--ash);
+      max-width: 300px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid rgba(183,177,170,0.12);
+    }
+
+    .service-card {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(183,177,170,0.12);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.5s var(--ease-out);
+    }
+
+    .service-card:last-child { border-right: none; }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--champagne);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease-out);
+    }
+
+    .service-card:hover { background: rgba(214,194,161,0.05); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-num {
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      color: var(--mid);
+      margin-bottom: 3rem;
+    }
+
+    .service-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+
+    .service-name {
+      font-family: var(--serif-stack);
+      font-weight: 300;
+      font-size: 1.3rem;
+      color: var(--warm-white);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-desc {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: var(--mid);
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      text-decoration: none;
+      margin-top: 2.5rem;
+      transition: gap 0.3s var(--ease-out);
+    }
+
+    .service-link:hover { gap: 1rem; }
+
+    /* ─── PROCESS ───────────────────────────────────────────────────────────── */
+    #process {
+      padding: 10rem 0;
+      background: var(--warm-white);
+    }
+
+    .process-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 7rem;
+      align-items: end;
+    }
+
+    .process-heading {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--black);
+    }
+
+    .process-desc {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--mid);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 1.2rem;
+      left: 2rem;
+      right: 2rem;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .process-step { position: relative; }
+
+    .step-dot {
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--champagne);
+      border-radius: 50%;
+      background: var(--warm-white);
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+      transition: background 0.3s;
+    }
+
+    .process-step:hover .step-dot { background: var(--champagne); }
+
+    .step-num {
+      font-family: var(--body-stack);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-family: var(--serif-stack);
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+
+    .step-desc {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: var(--mid);
+    }
+
+    /* ─── JOURNAL ───────────────────────────────────────────────────────────── */
+    #journal {
+      padding: 10rem 0;
+      background: #1A1815;
+    }
+
+    #journal .section-label { color: rgba(183,177,170,0.4); }
+    #journal .section-label::before { background: rgba(214,194,161,0.3); }
+
+    .journal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .journal-heading {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      color: var(--warm-white);
+      letter-spacing: -0.02em;
+    }
+
+    .journal-all-link {
+      font-family: var(--body-stack);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(214,194,161,0.3);
+      padding-bottom: 0.2rem;
+      transition: gap 0.3s var(--ease-out);
+    }
+
+    .journal-all-link:hover { gap: 1.2rem; }
+
+    .journal-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 0;
+      border: 1px solid rgba(183,177,170,0.1);
+    }
+
+    .journal-card {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(183,177,170,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .journal-card:last-child { border-right: none; }
+    .journal-card:hover { background: rgba(214,194,161,0.04); }
+
+    .journal-card-featured {
+      border-bottom: none;
+    }
+
+    .journal-tag {
+      font-family: var(--body-stack);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      margin-bottom: 1.5rem;
+    }
+
+    .journal-title {
+      font-family: var(--serif-stack);
+      font-weight: 300;
+      font-size: 1.25rem;
+      color: var(--warm-white);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 1.25rem;
+    }
+
+    .journal-card-featured .journal-title {
+      font-size: 1.7rem;
+    }
+
+    .journal-excerpt {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+
+    .journal-meta {
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+    }
+
+    .journal-divider {
+      border-right: none;
+      border-top: 1px solid rgba(183,177,170,0.1);
+    }
+
+    .journal-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .journal-right .journal-card:first-child {
+      border-bottom: 1px solid rgba(183,177,170,0.1);
+    }
+
+    /* ─── CONTACT ───────────────────────────────────────────────────────────── */
+    #contact {
+      padding: 10rem 0;
+      background: var(--warm-white);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: start;
+    }
+
+    .contact-left {}
+
+    .contact-heading {
+      font-family: var(--serif-stack);
+      font-weight: 200;
+      font-size: clamp(2.2rem, 4vw, 4.5rem);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--black);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-intro {
+      font-family: var(--body-stack);
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--mid);
+      margin-bottom: 4rem;
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .contact-method {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--line);
+      text-decoration: none;
+      transition: padding 0.3s var(--ease-out);
+    }
+
+    .contact-method:hover { padding-left: 0.5rem; }
+
+    .contact-method-label {
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    .contact-method-value {
+      font-family: var(--body-stack);
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--black);
+    }
+
+    .contact-method-arrow {
+      opacity: 0;
+      transition: opacity 0.3s;
+      color: var(--champagne);
+    }
+
+    .contact-method:hover .contact-method-arrow { opacity: 1; }
+
+    .contact-right { padding-top: 5rem; }
+
+    .contact-form-note {
+      font-family: var(--body-stack);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 2rem;
+    }
+
+    .contact-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+
+    .field-row {
+      display: flex;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .field-row:last-of-type { border-bottom: none; }
+
+    .field-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .field-wrap:first-child:not(:last-child) {
+      border-right: 1px solid var(--line);
+    }
+
+    .field-wrap input,
+    .field-wrap textarea,
+    .field-wrap select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: var(--body-stack);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--black);
+      padding: 1.75rem 1.5rem 0.75rem;
+      resize: none;
+      cursor: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .field-wrap label {
+      position: absolute;
+      top: 0.7rem;
+      left: 1.5rem;
+      font-family: var(--body-stack);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ash);
+      pointer-events: none;
+    }
+
+    .field-wrap textarea { height: 130px; padding-top: 2.5rem; }
+
+    .contact-submit {
+      width: 100%;
+      background: var(--black);
+      color: var(--warm-white);
+      border: none;
+      font-family: var(--body-stack);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 1.4rem;
+      cursor: none;
+      transition: background 0.3s, transform 0.3s var(--ease-out);
+      margin-top: 1.5rem;
+    }
+
+    .contact-submit:hover {
+      background: var(--champagne);
+      color: var(--black);
+      transform: translateY(-1px);
+    }
+
+    .contact-location {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .contact-location-label {
+      font-family: var(--body-stack);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-location-addr {
+      font-family: var(--body-stack);
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--mid);
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 4rem 0 2.5rem;
+      border-top: 1px solid rgba(183,177,170,0.1);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+    }
+
+    .footer-logo {
+      font-family: var(--serif-stack);
+      font-weight: 300;
+      font-size: 1.05rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+    }
+
+    .footer-tagline {
+      font-family: var(--body-stack);
+      font-size: 0.72rem;
+      color: var(--mid);
+      letter-spacing: 0.1em;
+      margin-top: 0.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--body-stack);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .footer-links a:hover { color: var(--champagne); }
+
+    .footer-bottom {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(183,177,170,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      color: var(--mid);
+      letter-spacing: 0.12em;
+    }
+
+    .footer-domain {
+      font-family: var(--body-stack);
+      font-size: 0.65rem;
+      color: var(--mid);
+      letter-spacing: 0.15em;
+    }
+
+    /* ─── ANIMATE ON SCROLL ─────────────────────────────────────────────────── */
+    .aos {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+
+    .aos.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .aos-delay-1 { transition-delay: 0.1s; }
+    .aos-delay-2 { transition-delay: 0.2s; }
+    .aos-delay-3 { transition-delay: 0.3s; }
+    .aos-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── KEYFRAMES ─────────────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-card:nth-child(2) { border-right: none; }
+      .service-card:nth-child(3) { border-right: 1px solid rgba(183,177,170,0.12); border-top: 1px solid rgba(183,177,170,0.12); }
+      .service-card:nth-child(4) { border-top: 1px solid rgba(183,177,170,0.12); border-right: none; }
+      .journal-grid { grid-template-columns: 1fr; }
+      .journal-card { border-right: none; border-bottom: 1px solid rgba(183,177,170,0.1); }
+      .journal-right { flex-direction: row; }
+      .journal-right .journal-card:first-child { border-bottom: 1px solid rgba(183,177,170,0.1); border-right: 1px solid rgba(183,177,170,0.1); }
+      .process-steps { grid-template-columns: repeat(2, 1fr); gap: 3rem 4rem; }
+      .process-steps::before { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.5rem 1.75rem; }
+      nav.scrolled { padding: 1rem 1.75rem; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+      .about-right { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 3rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .contact-right { padding-top: 0; }
+    }
+
+    @media (max-width: 640px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid rgba(183,177,170,0.12); }
+      .service-card:nth-child(3) { border-top: none; border-right: none; }
+      .process-steps { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .hero-scroll-indicator { display: none; }
+      .journal-right { flex-direction: column; }
+      .journal-right .journal-card:first-child { border-right: none; }
+      .footer-links { gap: 1.5rem; flex-wrap: wrap; }
+      .process-intro { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Noise -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#process" onclick="closeMobileMenu()">Process</a>
+  <a href="#journal" onclick="closeMobileMenu()">Insights</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- Navigation -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo" aria-label="RAS Home">RAS</a>
+  <ul class="nav-links" role="list">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#journal">Insights</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta" aria-label="Engage RAS">Engage</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────────────────────────── -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-bg-text" aria-hidden="true">RAS</div>
+  <div class="hero-scroll-indicator" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+  <div class="container">
+    <p class="hero-eyebrow">Independent Technical Advisory — est. Istanbul</p>
+    <h1 class="hero-heading">
+      Precision at<br>
+      <em>every depth</em><br>
+      of risk.
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        Marine survey, cargo inspection, and risk analysis conducted with rigorous independence and technical exactitude.
+      </p>
+      <div class="hero-cta">
+        <a href="#services" class="btn-primary">Our Services</a>
+        <a href="#about" class="btn-ghost">
+          About RAS
+          <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+            <path d="M1 5H15M10 1L15 5L10 9" stroke="currentColor" stroke-width="1" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─────────────────────────────────────────────────────────────────── -->
+<section id="about" aria-label="About RAS">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-left">
+        <p class="section-label aos">About</p>
+        <h2 class="about-statement aos">
+          An independent firm<br>
+          built on <strong>technical truth</strong><br>
+          and measured judgment.
+        </h2>
+        <p class="about-body aos">
+          RAS operates as a fully independent technical advisory practice. We carry no affiliations with insurers, carriers, or commercial interests — our mandate is accuracy, not accommodation.
+        </p>
+        <p class="about-body aos">
+          Founded by surveyors with decades of field experience across international maritime corridors, RAS brings a forensic sensibility to every engagement.
+        </p>
+      </div>
+      <div class="about-right">
+        <div class="about-stats">
+          <div class="stat-item aos">
+            <div class="stat-num">24+</div>
+            <div class="stat-label">Years<br>Experience</div>
+          </div>
+          <div class="stat-item aos aos-delay-1">
+            <div class="stat-num">1,800</div>
+            <div class="stat-label">Surveys<br>Completed</div>
+          </div>
+          <div class="stat-item aos aos-delay-2">
+            <div class="stat-num">46</div>
+            <div class="stat-label">Ports<br>Covered</div>
+          </div>
+          <div class="stat-item aos aos-delay-3">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Independent<br>Practice</div>
+          </div>
+        </div>
+        <div class="about-credentials aos">
+          <div class="credential-item">
+            <span>Accreditation</span>
+            <span>IIMS Member</span>
+          </div>
+          <div class="credential-item">
+            <span>Classification</span>
+            <span>Lloyd's Register</span>
+          </div>
+          <div class="credential-item">
+            <span>Jurisdiction</span>
+            <span>Turkish Maritime Law</span>
+          </div>
+          <div class="credential-item">
+            <span>Operations</span>
+            <span>Eastern Mediterranean</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ──────────────────────────────────────────────────────────────── -->
+<section id="services" aria-label="Services">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <p class="section-label">Services</p>
+        <h2 class="services-heading aos">
+          Technical scope,<br>precisely defined.
+        </h2>
+      </div>
+      <p class="services-sub aos">
+        Each discipline is approached as a distinct technical practice, with dedicated methodology and rigorous documentation.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Service 1 -->
+      <div class="service-card aos">
+        <div class="service-num">01</div>
+        <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="#D6C2A1" stroke-width="0.8" aria-hidden="true">
+          <path d="M2 22 L6 18 L12 20 L18 14 L24 16 L30 10"/>
+          <path d="M2 26 L30 26"/>
+          <path d="M6 26 L6 22"/>
+          <path d="M18 26 L18 14"/>
+        </svg>
+        <h3 class="service-name">Marine Survey</h3>
+        <p class="service-desc">
+          Condition surveys, pre-purchase inspections, and damage assessments conducted aboard vessels across Eastern Mediterranean ports with full technical documentation.
+        </p>
+        <a href="#contact" class="service-link">
+          Enquire
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+            <path d="M1 4H11M7 1L11 4L7 7" stroke="currentColor" stroke-width="0.8" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="service-card aos aos-delay-1">
+        <div class="service-num">02</div>
+        <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="#D6C2A1" stroke-width="0.8" aria-hidden="true">
+          <rect x="4" y="8" width="24" height="18" rx="1"/>
+          <path d="M10 8 L10 6 L22 6 L22 8"/>
+          <path d="M10 16 L22 16"/>
+          <path d="M10 20 L18 20"/>
+          <circle cx="25" cy="25" r="1" fill="#D6C2A1"/>
+        </svg>
+        <h3 class="service-name">Cargo Loss Inspection</h3>
+        <p class="service-desc">
+          Independent investigation of cargo damage, shortage, and contamination events — from receipt through discharge — with forensic quality reporting.
+        </p>
+        <a href="#contact" class="service-link">
+          Enquire
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+            <path d="M1 4H11M7 1L11 4L7 7" stroke="currentColor" stroke-width="0.8" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="service-card aos aos-delay-2">
+        <div class="service-num">03</div>
+        <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="#D6C2A1" stroke-width="0.8" aria-hidden="true">
+          <circle cx="16" cy="16" r="12"/>
+          <path d="M16 8 L16 16 L22 16"/>
+          <path d="M10 4 L10 7"/>
+          <path d="M22 4 L22 7"/>
+        </svg>
+        <h3 class="service-name">Risk Analysis</h3>
+        <p class="service-desc">
+          Structured risk identification, quantification, and mitigation advisory across marine, cargo, and operational exposures — independent of any underwriting interest.
+        </p>
+        <a href="#contact" class="service-link">
+          Enquire
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+            <path d="M1 4H11M7 1L11 4L7 7" stroke="currentColor" stroke-width="0.8" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="service-card aos aos-delay-3">
+        <div class="service-num">04</div>
+        <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="#D6C2A1" stroke-width="0.8" aria-hidden="true">
+          <path d="M6 4 L26 4 L26 28 L6 28 Z"/>
+          <path d="M10 10 L22 10"/>
+          <path d="M10 14 L22 14"/>
+          <path d="M10 18 L18 18"/>
+          <circle cx="23" cy="24" r="3" stroke="#D6C2A1"/>
+          <path d="M20.9 21.9 L22.3 23.3 L25.1 20.9" stroke="#D6C2A1" stroke-width="0.7"/>
+        </svg>
+        <h3 class="service-name">Technical Reporting</h3>
+        <p class="service-desc">
+          Expert witness statements, technical opinions, and detailed survey reports prepared to the standard required for arbitration, litigation, and claims resolution.
+        </p>
+        <a href="#contact" class="service-link">
+          Enquire
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+            <path d="M1 4H11M7 1L11 4L7 7" stroke="currentColor" stroke-width="0.8" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ───────────────────────────────────────────────────────────────── -->
+<section id="process" aria-label="Methodology">
+  <div class="container">
+    <div class="process-intro">
+      <div>
+        <p class="section-label aos">Methodology</p>
+        <h2 class="process-heading aos">
+          A structured path<br>to reliable findings.
+        </h2>
+      </div>
+      <p class="process-desc aos">
+        Every engagement follows a consistent, transparent methodology. From initial instruction through final reporting, we maintain complete independence and systematic rigour at each stage.
+      </p>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step aos">
+        <div class="step-dot"></div>
+        <p class="step-num">Step 01</p>
+        <h3 class="step-title">Instruction & Scope</h3>
+        <p class="step-desc">We receive and carefully review instructions, establishing scope, timeline, and access requirements before any field activity begins.</p>
+      </div>
+      <div class="process-step aos aos-delay-1">
+        <div class="step-dot"></div>
+        <p class="step-num">Step 02</p>
+        <h3 class="step-title">Field Investigation</h3>
+        <p class="step-desc">On-site inspection and evidence collection conducted according to established survey protocols, with meticulous contemporaneous records.</p>
+      </div>
+      <div class="process-step aos aos-delay-2">
+        <div class="step-dot"></div>
+        <p class="step-num">Step 03</p>
+        <h3 class="step-title">Technical Analysis</h3>
+        <p class="step-desc">Findings are subjected to rigorous technical analysis, referencing applicable standards, regulations, and established marine practice.</p>
+      </div>
+      <div class="process-step aos aos-delay-3">
+        <div class="step-dot"></div>
+        <p class="step-num">Step 04</p>
+        <h3 class="step-title">Reporting & Advisory</h3>
+        <p class="step-desc">Comprehensive written reports delivered with clarity and precision, structured for use by legal, commercial, and technical audiences alike.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── JOURNAL ───────────────────────────────────────────────────────────────── -->
+<section id="journal" aria-label="Selected Insights">
+  <div class="container">
+    <div class="journal-header">
+      <div>
+        <p class="section-label">Selected Insights</p>
+        <h2 class="journal-heading aos">Technical observations<br>from the field.</h2>
+      </div>
+      <a href="#journal" class="journal-all-link">
+        View all
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+          <path d="M1 4H11M7 1L11 4L7 7" stroke="currentColor" stroke-width="0.8" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="journal-grid aos">
+      <!-- Featured -->
+      <div class="journal-card journal-card-featured">
+        <p class="journal-tag">Marine Survey</p>
+        <h3 class="journal-title">Interpreting hull deformation: when visual evidence diverges from structural data</h3>
+        <p class="journal-excerpt">A forensic survey rarely yields singular clarity. When hull plating presents visual deformation inconsistent with structural models, the surveyor must negotiate between material evidence and engineered expectation.</p>
+        <p class="journal-meta">April 2025 &nbsp;—&nbsp; 8 min read</p>
+      </div>
+
+      <!-- Right column: two stacked -->
+      <div class="journal-right">
+        <a href="#journal" class="journal-card">
+          <p class="journal-tag">Risk Analysis</p>
+          <h3 class="journal-title">Quantifying undeclared cargo risk in container operations</h3>
+          <p class="journal-meta">February 2025 &nbsp;—&nbsp; 5 min read</p>
+        </a>
+        <a href="#journal" class="journal-card journal-divider">
+          <p class="journal-tag">Cargo Inspection</p>
+          <h3 class="journal-title">The condensation problem: moisture damage attribution in refrigerated cargo</h3>
+          <p class="journal-meta">January 2025 &nbsp;—&nbsp; 6 min read</p>
+        </a>
+      </div>
+
+      <!-- Third column -->
+      <div class="journal-right">
+        <a href="#journal" class="journal-card">
+          <p class="journal-tag">Technical Reporting</p>
+          <h3 class="journal-title">Expert evidence standards: preparing survey reports for maritime arbitration</h3>
+          <p class="journal-meta">December 2024 &nbsp;—&nbsp; 7 min read</p>
+        </a>
+        <a href="#journal" class="journal-card journal-divider">
+          <p class="journal-tag">Marine Survey</p>
+          <h3 class="journal-title">Antifouling system performance: field observations from the Aegean</h3>
+          <p class="journal-meta">November 2024 &nbsp;—&nbsp; 4 min read</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ───────────────────────────────────────────────────────────────── -->
+<section id="contact" aria-label="Contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <p class="section-label aos">Contact</p>
+        <h2 class="contact-heading aos">
+          Let us discuss<br>your matter.
+        </h2>
+        <p class="contact-intro aos">
+          RAS accepts instructions from P&I clubs, law firms, commodity traders, shipowners, and cargo interests. Initial consultations are confidential and without obligation.
+        </p>
+        <div class="contact-methods aos">
+          <a href="mailto:info@ras.net.tr" class="contact-method">
+            <span class="contact-method-label">Electronic</span>
+            <span class="contact-method-value">info@ras.net.tr</span>
+            <span class="contact-method-arrow">↗</span>
+          </a>
+          <a href="tel:+902121234567" class="contact-method">
+            <span class="contact-method-label">Direct Line</span>
+            <span class="contact-method-value">+90 212 123 45 67</span>
+            <span class="contact-method-arrow">↗</span>
+          </a>
+          <a href="#" class="contact-method">
+            <span class="contact-method-label">Emergency</span>
+            <span class="contact-method-value">+90 532 000 00 00</span>
+            <span class="contact-method-arrow">↗</span>
+          </a>
+        </div>
+        <div class="contact-location aos">
+          <p class="contact-location-label">Office</p>
+          <address class="contact-location-addr" style="font-style: normal;">
+            Levent, Büyükdere Caddesi<br>
+            Istanbul, Turkey<br>
+            ras.net.tr
+          </address>
+        </div>
+      </div>
+
+      <div class="contact-right aos">
+        <p class="contact-form-note">Send an enquiry</p>
+        <div class="contact-fields">
+          <div class="field-row">
+            <div class="field-wrap">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" autocomplete="name" />
+            </div>
+            <div class="field-wrap">
+              <label for="organisation">Organisation</label>
+              <input type="text" id="organisation" name="organisation" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-wrap">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" autocomplete="email" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-wrap">
+              <label for="service">Service Required</label>
+              <select id="service" name="service">
+                <option value="" disabled selected></option>
+                <option>Marine Survey</option>
+                <option>Cargo Loss Inspection</option>
+                <option>Risk Analysis</option>
+                <option>Technical Reporting</option>
+                <option>General Advisory</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-wrap">
+              <label for="message">Brief Description</label>
+              <textarea id="message" name="message"></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="contact-submit">Submit Enquiry</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────────────── -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="#hero" class="footer-logo">RAS</a>
+        <p class="footer-tagline">Marine Survey & Risk Advisory — ras.net.tr</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Methodology</a></li>
+        <li><a href="#journal">Insights</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 RAS — Risk & Advisory Services. All rights reserved.</p>
+      <p class="footer-domain">Istanbul, Turkey</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Cursor ── */
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  const moveCursor = () => {
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(moveCursor);
+  };
+  moveCursor();
+
+  const interactives = document.querySelectorAll('a, button, input, textarea, select');
+  interactives.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width  = '4px';
+      cursor.style.height = '4px';
+      ring.style.width    = '52px';
+      ring.style.height   = '52px';
+      ring.style.opacity  = '0.3';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width  = '8px';
+      cursor.style.height = '8px';
+      ring.style.width    = '36px';
+      ring.style.height   = '36px';
+      ring.style.opacity  = '0.5';
+    });
+  });
+
+  /* ── Nav scroll ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── Mobile menu ── */
+  const hamburger    = document.getElementById('hamburger');
+  const mobileMenu   = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+    mobileMenu.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  window.closeMobileMenu = () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false);
+    mobileMenu.setAttribute('aria-hidden', true);
+    document.body.style.overflow = '';
+  };
+
+  /* ── AOS ── */
+  const aosEls = document.querySelectorAll('.aos');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  aosEls.forEach(el => observer.observe(el));
+
+  /* ── Smooth hero parallax ── */
+  const heroBg = document.querySelector('.hero-bg-text');
+  if (heroBg) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      heroBg.style.transform = `translate(-50%, calc(-50% + ${y * 0.18}px))`;
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
