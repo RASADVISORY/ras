@@ -45,6 +45,7 @@ section{padding:72px 0}
 .top nav a:hover{color:#fff}
 /* hero */
 .hero{position:relative;overflow:hidden;background:var(--navy) url(kapak-bg.webp) center/cover no-repeat;color:#fff;padding:150px 0 90px;min-height:640px}
+@media (max-width:820px){.hero{padding:110px 0 40px;min-height:0}}
 .hero .wrap{position:relative;z-index:2}
 .hv{position:absolute;top:9%;right:2%;height:82%;width:auto;z-index:1;-webkit-mask-image:radial-gradient(ellipse 62% 58% at 68% 52%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 68% 52%,#000 62%,transparent 100%)}
 .hero h1{color:#fff;font-size:clamp(32px,6vw,54px);line-height:1.16;max-width:600px;margin-top:22px}
@@ -110,8 +111,9 @@ section{padding:72px 0}
 footer{background:#0A1626;color:#8C99A8;font-size:13px;padding:22px 0}
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer a{color:#C9D2DC}
-@media (prefers-reduced-motion:reduce){.hv{display:none}}
-@media (max-width:1279px){.hv{display:none}}
+@media (prefers-reduced-motion:reduce){.hv,.hvm{display:none}}
+.hvm{display:none;width:100%;max-width:620px;height:auto;margin-top:34px;border-radius:10px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 90%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 90%,transparent 100%)}
+@media (max-width:1279px){.hv{display:none}.hvm{display:block}}
 @media (max-width:820px){
   .top nav{display:none}
   .sol{grid-template-columns:1fr;gap:6px}
@@ -135,7 +137,7 @@ footer a{color:#C9D2DC}
   <nav><a href="#cozumler">Çözümler</a><a href="#araclar">Hazır araçlar</a><a href="#nasil">Nasıl çalışırız</a><a href="#iletisim">İletişim</a></nav>
 </div></header>
 
-<section class="hero"><video class="hv" autoplay muted loop playsinline preload="auto" poster="hero-poster.jpg" aria-hidden="true"><source src="hero.mp4" type="video/mp4"></video><div class="wrap">
+<section class="hero"><video class="hv" muted loop playsinline preload="none" poster="hero-poster.jpg" data-src="hero.mp4" aria-hidden="true"></video><div class="wrap">
   <span class="eyebrow">İşletmeler için dijital çözümler</span>
   <h1>İşinizi kolaylaştıran, size göre dijital çözümler.</h1>
   <p>Müşterilerin sizi internette bulmasından teklif hazırlamaya, işlerin takibinden saha masraflarının hesabına kadar. Küçük bir adımla başlayabilir, ihtiyacınız kadarını alabilirsiniz.</p>
@@ -143,7 +145,14 @@ footer a{color:#C9D2DC}
     <a class="btn p" href="https://wa.me/905455544480?text=Merhaba%2C%20RAS%20Advisory%20Design%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">WhatsApp'tan yazın</a>
     <a class="btn o" href="RAS-Design-Tanitim-Brosuru.pdf" target="_blank" rel="noopener">Broşürü indirin (PDF)</a>
   </div>
+  <video class="hvm" muted loop playsinline preload="none" poster="hero-m-poster.jpg" data-src="hero-m.mp4" aria-hidden="true"></video>
 </div></section>
+<script>
+(function(){var d=document.querySelector('.hv'),m=document.querySelector('.hvm');if(!d||!m)return;
+var mq=window.matchMedia('(min-width:1280px)');var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function set(){var v=mq.matches?d:m,o=mq.matches?m:d;o.pause();if(rm)return;if(!v.getAttribute('src')){v.src=v.getAttribute('data-src')}v.muted=true;var pr=v.play();if(pr&&pr.catch)pr.catch(function(){})}
+set();if(mq.addEventListener)mq.addEventListener('change',set);else if(mq.addListener)mq.addListener(set);})();
+</script>
 
 <section><div class="wrap">
   <span class="eyebrow">Biz kimiz</span>
