@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RAS Advisory Design · İşletmeler için dijital çözümler</title>
+<meta name="description" content="Web sitesi ve Google'da görünürlük, işinize özel İş Yönetim Sistemi, teklif ve saha masraf araçları. Teknik bilgi gerekmez; kurar, teslim ederiz.">
+<meta name="theme-color" content="#0F1F33">
+<meta property="og:title" content="RAS Advisory Design · İşletmeler için dijital çözümler">
+<meta property="og:description" content="Dijital Vitrin, İş Yönetim Sistemi ve hazır dijital araçlar. Abonelik zorunluluğu yok, kapsam baştan yazılı.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.rasadvisory.com.tr/design/">
+<meta property="og:image" content="https://www.rasadvisory.com.tr/design/og.png">
+<link rel="canonical" href="https://www.rasadvisory.com.tr/design/">
+<link rel="icon" href="ras-amblem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F1F33;--ink:#14213D;--text:#1F2733;--muted:#5B6472;--green:#3D5C4F;--mint:#8DB59A;--paper:#F7F7F4;--surface:#ECEEE9;--line:#D4D8D2}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--text);font-family:Lato,'Segoe UI',sans-serif;font-size:16px;line-height:1.65}
+a{color:inherit}
+img{max-width:100%;display:block}
+.serif{font-family:'Libre Baskerville',Georgia,serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:var(--green)}
+h1,h2,h3{font-family:'Libre Baskerville',Georgia,serif;font-weight:400;color:var(--ink);margin:0}
+h2{font-size:clamp(26px,4vw,36px);line-height:1.25;margin-top:14px}
+.lede{font-family:'Libre Baskerville',Georgia,serif;font-size:clamp(16px,2.2vw,18px);line-height:1.7;color:var(--ink);margin:18px 0 0;max-width:760px}
+section{padding:72px 0}
+.rule{width:56px;height:2px;background:var(--green);margin-top:24px}
+/* header */
+.top{position:absolute;left:0;right:0;top:0;z-index:5}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:22px;padding-bottom:22px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{height:34px;width:auto}
+.brand .adv{font-family:'Libre Baskerville',Georgia,serif;font-size:22px;color:#fff;line-height:1}
+.brand .sep{width:1px;height:26px;background:#3D5C4F}
+.brand .dsn{font-size:13px;letter-spacing:.32em;font-weight:700;color:var(--mint);text-transform:uppercase}
+.top nav{display:flex;gap:22px;font-size:14px}
+.top nav a{color:#DCE2E9;text-decoration:none}
+.top nav a:hover{color:#fff}
+/* hero */
+.hero{position:relative;background:var(--navy) url(kapak-bg.webp) center/cover no-repeat;color:#fff;padding:150px 0 90px}
+.hero h1{color:#fff;font-size:clamp(32px,6vw,54px);line-height:1.16;max-width:720px;margin-top:22px}
+.hero p{color:#DCE2E9;max-width:620px;font-size:17px;margin:24px 0 0}
+.hero .eyebrow{color:var(--mint)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid transparent}
+.btn.p{background:var(--mint);color:var(--navy)}
+.btn.p:hover{background:#a5c7b0}
+.btn.o{border-color:#4A6178;color:#fff}
+.btn.o:hover{border-color:#fff}
+.btn.d{background:var(--navy);color:#fff}
+/* guide */
+.guide{margin-top:30px;border-top:2px solid var(--navy)}
+.g{display:grid;grid-template-columns:1fr 28px 1fr;gap:12px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.g .q{color:var(--text)}
+.g .ar{color:var(--green);text-align:center}
+.g .a{font-family:'Libre Baskerville',Georgia,serif;color:var(--ink);font-size:17px}
+.g .a small{display:block;font-family:Lato,sans-serif;font-size:13px;color:var(--muted)}
+.note{font-size:14px;color:var(--muted);margin-top:14px}
+/* solutions */
+.sol{display:grid;grid-template-columns:260px 1fr;gap:32px;padding:30px 0;border-bottom:1px solid var(--line)}
+.sol h3{font-size:24px;margin-top:8px}
+.sub{font-family:'Libre Baskerville',Georgia,serif;font-style:italic;color:var(--green);font-size:14px;margin-top:6px}
+.for{font-size:13.5px;color:var(--muted);margin-top:14px}
+.for b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.li{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px;margin-top:14px;padding:0;list-style:none}
+.li li{padding-left:16px;position:relative;font-size:15px;line-height:1.5}
+.li li:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;background:var(--green)}
+.band{margin-top:28px;background:var(--surface);border-top:2px solid var(--navy);padding:20px 22px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;font-size:14px}
+.band b{display:block;color:var(--ink)}
+/* tools */
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
+.tool{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
+.tool .shot{aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--line);background:#fff}
+.tool .shot img{width:100%}
+.tool .in{padding:20px}
+.tool h3{font-size:20px}
+.tool .li{grid-template-columns:1fr}
+/* steps */
+.dark{background:var(--navy);color:#fff}
+.dark h2{color:#fff}.dark .eyebrow{color:var(--mint)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:32px;border-top:1px solid #24364F}
+.steps div{padding:24px 20px 6px 0}
+.steps .n{font-family:'Libre Baskerville',Georgia,serif;font-size:26px;color:var(--mint)}
+.steps b{display:block;margin:8px 0 4px;font-size:16px}
+.steps span{color:#C9D2DC;font-size:14.5px}
+.prom{display:grid;grid-template-columns:1fr 1fr;gap:14px 34px;margin-top:36px}
+.prom div{padding-left:26px;position:relative;color:#DCE2E9;font-size:15px}
+.prom div:before{content:"✓";position:absolute;left:0;color:var(--mint);font-weight:700}
+.prom b{color:#fff}
+/* cases */
+.case{padding:18px 0;border-bottom:1px solid var(--line)}
+.case .t{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:baseline}
+.case h3{font-size:19px}
+.case .tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--green)}
+.case p{margin:6px 0 0;font-size:15px}
+/* contact */
+.contact{background:var(--navy) url(kapanis-bg.webp) center/cover no-repeat;color:#fff;padding:90px 0}
+.contact h2{color:#fff;max-width:640px}
+.contact p{color:#DCE2E9;max-width:600px;font-family:'Libre Baskerville',Georgia,serif;font-style:italic}
+.cgrid{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:12px;margin-top:30px}
+footer{background:#0A1626;color:#8C99A8;font-size:13px;padding:22px 0}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:#C9D2DC}
+@media (max-width:820px){
+  .top nav{display:none}
+  .sol{grid-template-columns:1fr;gap:6px}
+  .li{grid-template-columns:1fr}
+  .band{grid-template-columns:1fr}
+  .tools{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .prom{grid-template-columns:1fr}
+  .cgrid{grid-template-columns:1fr}
+  .g{grid-template-columns:1fr;gap:4px}
+  .g .ar{display:none}
+  section{padding:56px 0}
+  .brand img{height:28px}.brand .adv{font-size:18px}.brand .dsn{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#"><img src="ras-logo-beyaz.png" alt="RAS"><span class="adv">Advisory</span><span class="sep"></span><span class="dsn" lang="en">Design</span></a>
+  <nav><a href="#cozumler">Çözümler</a><a href="#araclar">Hazır araçlar</a><a href="#nasil">Nasıl çalışırız</a><a href="#iletisim">İletişim</a></nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">İşletmeler için dijital çözümler</span>
+  <h1>İşinizi kolaylaştıran, size göre dijital çözümler.</h1>
+  <p>Müşterilerin sizi internette bulmasından teklif hazırlamaya, işlerin takibinden saha masraflarının hesabına kadar. Küçük bir adımla başlayabilir, ihtiyacınız kadarını alabilirsiniz.</p>
+  <div class="btns">
+    <a class="btn p" href="https://wa.me/905455544480?text=Merhaba%2C%20RAS%20Advisory%20Design%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">WhatsApp'tan yazın</a>
+    <a class="btn o" href="RAS-Design-Tanitim-Brosuru.pdf" target="_blank" rel="noopener">Broşürü indirin (PDF)</a>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow">Biz kimiz</span>
+  <h2>Teknik bilgi gerekmez. İhtiyacınızı anlatın, gerisini biz kuralım.</h2>
+  <p class="lede">İster yalnızca internette daha iyi görünmek isteyin, ister işlerinizi defter, Excel ve WhatsApp yerine tek bir yerden takip etmek. Önce işleyişinizi dinler, size gerçekten yarayacak olanı öneririz. Gereğinden fazlasını değil.</p>
+  <div class="rule"></div>
+  <p class="eyebrow" style="margin-top:44px">Nereden başlamalı?</p>
+  <div class="guide">
+    <div class="g"><div class="q">Müşteriler sizi internette bulamıyor, Google'da görünmüyorsunuz.</div><div class="ar">→</div><div class="a">Dijital Vitrin<small>Web sitesi, Google'da görünürlük, kurumsal e-posta</small></div></div>
+    <div class="g"><div class="q">İşler, siparişler ve tahsilatlar defter, Excel ve mesajlar arasında dağınık.</div><div class="ar">→</div><div class="a">İş Yönetim Sistemi<small>Tüm işiniz tek yerde, her cihazdan</small></div></div>
+    <div class="g"><div class="q">Teklif hazırlamak uzun sürüyor, belgeler her seferinde farklı görünüyor.</div><div class="ar">→</div><div class="a">Teklif Oluşturucu<small>Kendi logonuzla, dakikalar içinde PDF teklif</small></div></div>
+    <div class="g"><div class="q">Sahaya gidiyorsunuz ama yol, konaklama ve zaman maliyetini net bilemiyorsunuz.</div><div class="ar">→</div><div class="a">Saha Masraf Planlayıcı<small>Ziyaret maliyetini önceden hesaplayın</small></div></div>
+    <div class="g"><div class="q">Hem masrafı hesaplayıp hem de teklif vermek istiyorsunuz.</div><div class="ar">→</div><div class="a">Saha Teklif Paketi<small>Masraftan teklife, tek dosyada</small></div></div>
+  </div>
+  <p class="note">Emin değilseniz sorun değil: kısa bir görüşmede birlikte karar veririz.</p>
+</div></section>
+
+<section id="cozumler" style="padding-top:20px"><div class="wrap">
+  <span class="eyebrow">Çözümlerimiz</span>
+  <h2>Dışarıda güven, içeride düzen.</h2>
+  <div style="margin-top:26px;border-top:2px solid var(--navy)">
+    <div class="sol">
+      <div><span class="eyebrow" style="font-size:11px">01</span><h3>Dijital Vitrin</h3><div class="sub">Müşterinizin sizi bulduğu yer</div><div class="for"><b>Kimler için</b>Kendini doğru tanıtmak, yeni müşteriye ulaşmak isteyen her işletme.</div></div>
+      <div><p style="margin:0">İşletmenizi güven veren, telefonda da düzgün görünen bir web sitesiyle tanıtırız; Google'da ve haritalarda bulunmanızı sağlarız.</p>
+        <ul class="li"><li>Telefona uyumlu kurumsal web sitesi</li><li>Türkçe ve İngilizce</li><li>Google'da ve Haritalar'da görünürlük</li><li>Google İşletme Profili kurulumu</li><li>Alan adınızla kurumsal e-posta</li><li>Teklif formu ve WhatsApp bağlantısı</li><li>Ziyaretçi sayısı ve kısa raporlar</li><li>KVKK metinleri ve çerez altyapısı</li></ul></div>
+    </div>
+    <div class="sol">
+      <div><span class="eyebrow" style="font-size:11px">02</span><h3>İş Yönetim Sistemi</h3><div class="sub">İşinizin içeride döndüğü yer</div><div class="for"><b>Kimler için</b>Müşteri, sipariş, iş ve tahsilat takibi dağınık olan, büyümek isteyen işletmeler.</div></div>
+      <div><p style="margin:0">Sizin iş adımlarınıza göre kurulan, bilgisayardan da telefondan da kullanılan bir sistem. Kurar, ekibinizi eğitir ve teslim ederiz.</p>
+        <ul class="li"><li>Müşteri kartları ve geçmişi</li><li>Teklif, sipariş ve iş takibi</li><li>Görevler, hatırlatmalar, takvim</li><li>Tahsilat, alacak, gelir–gider</li><li>Kendi antetinizle belgeler</li><li>Ekip için yetki ayarları</li><li>Özet ekran ve raporlar</li><li>Veriler sizin hesaplarınızda</li></ul></div>
+    </div>
+  </div>
+  <div class="band">
+    <div><b>Birlikte daha güçlü</b>Sitedeki teklif formu doğrudan sisteminize düşebilir.</div>
+    <div><b>İsteğe bağlı destek</b>Teslimden sonra güncelleme ve içerik desteği talebe göre.</div>
+    <div><b>Basılı materyal</b>Kartvizit, broşür ve katalog tasarımı talep hâlinde.</div>
+  </div>
+</div></section>
+
+<section id="araclar" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <span class="eyebrow">03 · Hazır dijital araçlar</span>
+  <h2>Hemen kullanmaya başlayın.</h2>
+  <p class="lede">Kurulum yok, internet gerekmez. Dosyayı açın, firma bilgilerinizi ve logonuzu bir kez girin. Verileriniz yalnızca kendi bilgisayarınızda kalır.</p>
+  <div class="tools">
+    <div class="tool"><div class="shot"><img src="s-tek.png" alt="Teklif Oluşturucu ekranı" loading="lazy"></div><div class="in"><h3>Teklif Oluşturucu</h3><div class="sub">Profesyonel teklif, dakikalar içinde</div><ul class="li"><li>Kendi logonuz ve renklerinizle PDF</li><li>KDV, iskonto, toplamlar otomatik</li><li>Yazıyla tutar, geçerlilik tarihi</li><li>Tüm teklifler tek listede</li></ul></div></div>
+    <div class="tool"><div class="shot"><img src="urun-ekran.png" alt="Saha Masraf Planlayıcı ekranı" loading="lazy"></div><div class="in"><h3>Saha Masraf Planlayıcı</h3><div class="sub">Ziyaretin maliyetini önceden bilin</div><ul class="li"><li>81 il, çıkış ilinizi siz seçin</li><li>Araç, otobüs, uçak seçenekleri</li><li>Konaklama, yemek, zaman hesabı</li><li>Kârlı fiyat önerisi ve döküm PDF'i</li></ul></div></div>
+    <div class="tool"><div class="shot"><img src="s-pak.png" alt="Saha Teklif Paketi ekranı" loading="lazy"></div><div class="in"><h3>Saha Teklif Paketi</h3><div class="sub">İki araç bir arada</div><ul class="li"><li>Masrafı hesaplayın, fiyatı belirleyin</li><li>Tek tıkla teklife aktarın</li><li>Aynı logo ve renkle iki belge</li><li>Gerçekleşen masrafı takip edin</li></ul></div></div>
+  </div>
+  <p class="note"><b style="color:var(--ink)">Kimler için:</b> mühendislik ve danışmanlık firmaları, teknik servis ve kurulum ekipleri, eksperler, İSG uzmanları ve teklif veren her küçük işletme. Görseller örnek verilerle hazırlanmıştır.</p>
+</div></section>
+
+<section id="nasil" class="dark"><div class="wrap">
+  <span class="eyebrow">Nasıl çalışırız</span>
+  <h2>Sade bir süreç, tek muhatap.</h2>
+  <div class="steps">
+    <div><span class="n">1</span><b>Tanışma</b><span>İşleyişinizi ve ihtiyacınızı dinleriz.</span></div>
+    <div><span class="n">2</span><b>Yazılı öneri</b><span>Kapsam ve ücret baştan, net yazılır.</span></div>
+    <div><span class="n">3</span><b>Kurulum</b><span>Size göre kurar, birlikte deneriz.</span></div>
+    <div><span class="n">4</span><b>Teslim</b><span>Ekibinizi eğitir, teslim ederiz.</span></div>
+  </div>
+  <div class="prom">
+    <div><b>Abonelik zorunluluğu yok.</b> Kurar ve teslim ederiz; destek isteğe bağlıdır.</div>
+    <div><b>Sürpriz yok.</b> Her iş, başlamadan önce yazılı olarak netleşir.</div>
+    <div><b>Kontrol sizde.</b> Hesaplar ve veriler sizin adınıza, erişimi siz yönetirsiniz.</div>
+    <div><b>Dürüst içerik.</b> Sizin adınıza uydurma yorum, rakam veya bilgi yazılmaz.</div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow">Neler yaptık</span>
+  <h2>Her biri, bir işletmenin gerçek ihtiyacından doğdu.</h2>
+  <div style="margin-top:26px;border-top:2px solid var(--navy)">
+    <div class="case"><div class="t"><h3>Tabela ve reklam firması</h3><span class="tag">Dijital Vitrin · Teklif sistemi</span></div><p>İki dilli kurumsal site, Google'da görünürlük çalışması, kendi antetiyle teklif hazırlama paneli.</p></div>
+    <div class="case"><div class="t"><h3>Ahşap üretim atölyesi</h3><span class="tag">Dijital Vitrin · İş Yönetim Sistemi</span></div><p>Ürün kataloğuyla kurumsal site; siparişten üretime ve tahsilata kadar atölyenin tek ekrandan takibi.</p></div>
+    <div class="case"><div class="t"><h3>Mühendislik ve danışmanlık firması</h3><span class="tag">Kurumsal kimlik · İş Yönetim Sistemi</span></div><p>Site, broşür ve kurumsal e-posta düzeni; tekliften tahsilata tüm işlerin tek akışta yürütülmesi.</p></div>
+  </div>
+  <p class="note">Müşteri gizliliği gereği firma adları paylaşılmamıştır.</p>
+</div></section>
+
+<section id="iletisim" class="contact"><div class="wrap">
+  <span class="eyebrow" style="color:var(--mint)">İlk adım</span>
+  <h2>Kısa bir tanışma görüşmesiyle başlayalım.</h2>
+  <p>Hangi çözümün size uyduğunu birlikte konuşalım. Ücret, ihtiyacınıza göre yazılı olarak belirlenir; görüşme hiçbir taahhüt gerektirmez.</p>
+  <div class="cgrid">
+    <a class="btn p" href="https://wa.me/905455544480?text=Merhaba%2C%20RAS%20Advisory%20Design%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">WhatsApp: +90 545 554 44 80</a>
+    <a class="btn o" href="tel:+905455544480">Telefonla arayın</a>
+    <a class="btn o" href="mailto:design@rasadvisory.com.tr">design@rasadvisory.com.tr</a>
+  </div>
+  <p style="margin-top:34px;font-style:normal;font-family:Lato,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#fff">Furkan Serin <span style="color:var(--mint)">· Kurucu</span></p>
+</div></section>
+
+<footer><div class="wrap">
+  <span>© 2026 RAS Advisory · RAS Advisory Design</span>
+  <span><a href="RAS-Design-Tanitim-Brosuru.pdf">Tanıtım broşürü (PDF)</a> · <span class="serif" style="font-style:italic;color:var(--mint)">Düzenli iş, doğru karar.</span></span>
+</div></footer>
+</body>
+</html>
